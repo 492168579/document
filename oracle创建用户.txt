@@ -1,0 +1,43 @@
+su - oracle
+--登录
+
+sqlplus 'ypzwcs/Ypzwcs_2019 as sysdba'
+
+/u01/app/oracle/oradata/orcl/rms01.dbf
+/u01/app/oracle/oradata/orcl/temp01.dbf
+--创建表空间
+select name from v$datafile;
+create tablespace YPZW_ZH datafile '/u01/app/oracle/oradata/orcl/YPZWZ_ZH.dbf' size 100M reuse autoextend on next 40M maxsize unlimited default storage(initial 128k next 128k minextents 2 maxextents unlimited);
+--创建临时表空间
+select name from v$tempfile;
+create temporary tablespace YPZW_ZH_T tempfile '/u01/app/oracle/oradata/orcl/YPZW_ZH_T.dbf' size 100m reuse autoextend on next 20m maxsize unlimited;
+--创建用户赋权
+create user YPZW_ZS identified by Ypzw_2019 default tablespace YPZW_ZH temporary tablespace YPZW_ZH_T;
+
+---给用户授予权限  要给dba权限
+grant create session, create any table, create any view ,create any index,create any procedure,alter any table, alter any procedure,drop any table,drop any view, drop any index, drop any procedure,select any table, create any trigger,create table,insert any table, update any table, delete any table ,unlimited tablespace,connect,resource,dba to YPZW_ZS;
+
+---退出
+exit;
+--导入数据库
+imp YPZW_ZS/Ypzw_2019 file=/home/oracle/bak-oracle/ypzw-20190322.dmp  fromuser=ypzwcs touser=ypzw ignore=y;
+
+
+---------oracle数据导入
+su - oracle
+
+imp YPZW_TEST/Ypzw_2019 file=/home/oracle/bak-oracle/ammeter_install-20190825.dmp  fromuser=AMMETER_INSTALL touser=YPZW_TEST ignore=y;
+imp YPZW_TEST/Ypzw_2019 file=/home/oracle/bak-oracle/ammeter_mobile-20190825.dmp  fromuser=ammeter_mobile touser=YPZW_TEST ignore=y;
+imp YPZW_TEST/Ypzw_2019 file=/home/oracle/bak-oracle/ammeter_mobile_znyp-20190825.dmp  fromuser=ammeter_mobile_znyp touser=YPZW_TEST ignore=y;
+imp YPZW_TEST/Ypzw_2019 file=/home/oracle/bak-oracle/ammeter-20190825.dmp  fromuser=ammeter touser=YPZW_TEST ignore=y;
+
+-------创建序列
+
+
+
+
+
+
+
+-------------删除用户下所有数据
+DROP USER ypzw CASCADE;

@@ -1,0 +1,4 @@
+cd /usr/local/mysql/bin/
+./mysqldump --defaults-extra-file=/etc/my.cnf ypzw > /home/mysql/bak-mysql/ypzw-$(date +%Y%m%d).sql
+./mysqldump --defaults-extra-file=/etc/my.cnf ammeter > /home/mysql/bak-mysql/ammeter-$(date +%Y%m%d).sql
+./mysqldump --defaults-extra-file=/etc/my.cnf ypzw_test > /home/mysql/bak-mysql/ypzw_test-$(date +%Y%m%d).sql

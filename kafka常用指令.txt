@@ -1,0 +1,47 @@
+启动zookeeper
+/usr/local/kafka_2.10-0.10.0.0/bin/zookeeper-server-start.sh /usr/local/kafka_2.10-0.10.0.0/config/zookeeper.properties &
+
+启动kafka
+/usr/local/kafka_2.10-0.10.0.0/bin/kafka-server-start.sh /usr/local/kafka_2.10-0.10.0.0/config/server.properties &
+/usr/local/kafka_2.10-0.10.0.0-9093/bin/kafka-server-start.sh /usr/local/kafka_2.10-0.10.0.0-9093/config/server.properties &
+
+停止kafka
+/usr/local/kafka_2.10-0.10.0.0/bin/kafka-server-stop.sh
+
+创建主题
+/usr/local/kafka_2.10-0.10.0.0/bin/kafka-topics.sh --create --zookeeper 192.168.7.100:12181 --replication-factor 2 --partitions 1 --topic shuaige
+./kafka-topics.sh --create --zookeeper 10.100.8.216:2181 --replication-factor 2 --partitions 1 --topic test
+
+生产消息
+/usr/local/kafka_2.10-0.10.0.0/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test This is the first message
+./kafka-console-producer.sh --broker-list  10.100.218.216:9092 --topic test  tesMsg
+
+
+消费消息
+/usr/local/kafka_2.10-0.10.0.0/bin/kafka-console-consumer.sh --zookeeper localhost:12181 --topic test --from-beginning
+./kafka-console-consumer.sh --zookeeper 10.100.218.216:2181 --topic test --from-beginning
+
+
+查看kafka消息指令
+/usr/local/kafka_2.10-0.10.0.0/bin/kafka-run-class.sh kafka.tools.DumpLogSegments --files /var/kafka/log/SnapResp01-0/00000000000000000000.log  --print-data-log
+/usr/local/kafka_2.10-0.10.0.0-9093/bin/kafka-run-class.sh kafka.tools.DumpLogSegments --files /var/kafka/log9093/testTopic-0/00000000000000000000.log  --print-data-log
+
+/boot/kafka/kafka_2.10-0.10.0.0/bin/kafka-run-class.sh kafka.tools.DumpLogSegments --files /home/kafkalog/test-0/00000000000000000000.log  --print-data-log
+
+/usr/local/kafka/bin/kafka-run-class.sh kafka.tools.DumpLogSegments --files /usr/local/kafka/logs/kafka.topic.snap-report-0/00000000000000005660.log  --print-data-log
+
+
+/usr/local/kafka/bin/kafka-run-class.sh kafka.tools.DumpLogSegments --files  /usr/local/kafka/logs/SnapResp01-0/00000000000000000000.log  --print-data-log
+./kafka-run-class.sh kafka.tools.DumpLogSegments --files /tmp/kafka-logs/SnapReq01-0/00000000000000000000.log  --print-data-log
+
+
+
+查看主题详情
+/usr/local/kafka_2.10-0.10.0.0/bin/kafka-topics.sh --describe --zookeeper 172.16.15.6:12181 --topic SnapResp01
+
+
+查看kafka主题列表
+./kafka-topics.sh --list --zookeeper 10.100.8.216:2181
+
+
+
